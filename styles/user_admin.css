@@ -1,0 +1,147 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Color de fondo */
+    color: #333; /* Color del texto */
+    display: flex;
+    flex-direction: column; /* Permitir que el footer esté al final */
+    min-height: 100vh; /* Asegurar que el body ocupe al menos el 100% del viewport */
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    flex: 1; /* Para ocupar el espacio disponible */
+    margin: 20px;
+}
+
+/* Estilos para el sidebar */
+.sidebar {
+    width: 250px; /* Ancho fijo para el sidebar */
+    background-color: #007BFF; /* Color de fondo del sidebar */
+    color: white; /* Color del texto */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.sidebar h2 {
+    margin-bottom: 15px; /* Espacio inferior en encabezados del sidebar */
+}
+
+.sidebar a {
+    color: white; /* Color de los enlaces en el sidebar */
+    text-decoration: none; /* Sin subrayado */
+    display: block; /* Que ocupe todo el ancho */
+    margin: 10px 0; /* Espacio entre enlaces */
+}
+
+.sidebar a:hover {
+    text-decoration: underline; /* Subrayar al pasar el mouse */
+}
+
+/* Estilos para el contenido principal */
+.main-content {
+    flex: 1; /* Para ocupar el espacio disponible */
+    background-color: white; /* Fondo blanco para el contenido */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+h1, h2 {
+    margin-bottom: 20px; /* Espacio inferior en encabezados */
+}
+
+h1 {
+    font-size: 24px; /* Tamaño de fuente */
+    color: #007bff; /* Color del encabezado principal */
+}
+
+h2 {
+    font-size: 20px; /* Tamaño de fuente */
+    margin-top: 20px; /* Espacio superior en encabezados secundarios */
+}
+
+/* Tabla */
+table {
+    width: 100%; /* Ocupa el 100% del ancho */
+    border-collapse: collapse; /* Sin espacios entre las celdas */
+    margin-top: 10px; /* Espacio superior */
+}
+
+th, td {
+    padding: 12px; /* Espaciado interno de las celdas */
+    border: 1px solid #ddd; /* Borde de las celdas */
+    text-align: left; /* Alinear texto a la izquierda */
+}
+
+th {
+    background-color: #007bff; /* Color de fondo de los encabezados */
+    color: white; /* Color del texto en encabezados */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo alterno para filas */
+}
+
+tr:hover {
+    background-color: #ddd; /* Color al pasar el mouse */
+}
+
+/* Estilo de los enlaces (si los tienes en el contenido) */
+a {
+    color: #007bff; /* Color de enlaces */
+    text-decoration: none; /* Sin subrayado */
+}
+
+a:hover {
+    text-decoration: underline; /* Subrayar al pasar el mouse */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%; /* Asegura que el footer ocupe todo el ancho */
+    margin-top: auto; /* Permitir que el footer esté siempre al final */
+}
+
+.footer-logo {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 5px;
+}
+
+.footer-text {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .sidebar {
+        position: static; /* Hacer que el sidebar no sea fijo */
+        width: 100%; /* Ancho completo */
+        height: auto; /* Permitir que se ajuste al contenido */
+        padding: 10px; /* Espaciado interno más pequeño */
+    }
+
+    .main-content {
+        margin-left: 0; /* Quitar margen izquierdo */
+    }
+
+    .form-container {
+        margin: 20px; /* Espacio en móviles */
+        width: auto; /* Ancho automático */
+    }
+}

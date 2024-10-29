@@ -1,0 +1,37 @@
+/* Estilo para el contenedor del encabezado */
+header {
+    background-color: #f8f9fa; /* Color de fondo claro */
+    padding: 10px 20px; /* Espaciado interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Contenedor para alinear elementos */
+.container {
+    display: flex; /* Utiliza flexbox para la alineación */
+    justify-content: flex-end; /* Alinea a la derecha */
+    align-items: center; /* Centra verticalmente los elementos */
+}
+
+/* Estilo para la información del usuario */
+.user-info {
+    display: flex; /* Utiliza flexbox para los iconos y el nombre del usuario */
+    align-items: center; /* Centra verticalmente */
+}
+
+/* Estilo para los enlaces de configuración y cerrar sesión */
+.user-info a {
+    margin-left: 15px; /* Espacio entre los iconos */
+    color: #007bff; /* Color azul para los iconos */
+    text-decoration: none; /* Sin subrayado */
+}
+
+.user-info a:hover {
+    color: #0056b3; /* Color más oscuro al pasar el ratón */
+}
+
+/* Estilo para el nombre de usuario */
+.user-info span {
+    margin-right: 10px; /* Espacio entre el nombre de usuario y el primer icono */
+    color: #333; /* Color del texto */
+    font-weight: bold; /* Negrita para destacar el nombre */
+}

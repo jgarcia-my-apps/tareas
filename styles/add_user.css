@@ -1,0 +1,160 @@
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background */
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-image: url('../assets/images/hogar.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column; /* Asegúrate de que el cuerpo sea en columna */
+    min-height: 100vh;
+}
+
+/* Main Layout */
+header, footer {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Styles */
+header {
+    color: #333;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    height: 100vh; /* Mantener la altura del sidebar */
+    position: fixed; /* Fijar el sidebar */
+    width: 220px; /* Un poco más ancho para mejorar la legibilidad */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 240px; /* Margen izquierdo para el sidebar */
+    padding: 20px;
+    flex: 1; /* Permitir que el contenido principal ocupe el espacio restante */
+}
+
+/* Form Container Styles */
+.form-container {
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 20px auto; /* Centrar horizontalmente */
+}
+
+/* Input Styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button Styles */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styles */
+/* Footer Styles */
+footer {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 0; /* Reduce el padding */
+    text-align: center;
+    margin-top: auto; /* Permite que el footer esté siempre al final */
+    width: 100%; /* Asegura que el footer ocupe todo el ancho */
+}
+
+.footer-logo {
+    max-width: 100px; /* Ajusta el tamaño del logo */
+    height: auto; /* Mantiene la proporción */
+    display: block; /* Centrar el logo */
+    margin: 0 auto 5px; /* Espacio inferior entre el logo y el texto */
+}
+
+.footer-text {
+    margin: 0; /* Eliminar margen para un mejor ajuste */
+    font-size: 14px; /* Ajustar tamaño de fuente si es necesario */
+}
+
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .sidebar {
+        position: static; /* Hacer que el sidebar no sea fijo */
+        width: 100%; /* Ancho completo */
+        height: auto; /* Permitir que se ajuste al contenido */
+    }
+
+    .main-content {
+        margin-left: 0; /* Quitar margen izquierdo */
+    }
+
+    .form-container {
+        margin: 20px; /* Espacio en móviles */
+    }
+}

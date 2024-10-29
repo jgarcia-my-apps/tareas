@@ -1,0 +1,180 @@
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background */
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-image: url('../assets/images/hogar.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header and Footer */
+header, footer {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Styles */
+header {
+    color: #333;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    width: 240px; /* Ancho para mejorar la legibilidad */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 240px; /* Margen izquierdo para el sidebar */
+    padding: 20px;
+    flex: 1;
+}
+
+/* Form Container Styles */
+.form-container {
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    margin: 20px auto; /* Centrar horizontalmente */
+}
+
+/* Input Styles */
+.form-group {
+    margin-bottom: 20px; /* Mayor separación entre grupos */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold; /* Negrita para mejor legibilidad */
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 10px; /* Espacio interno aumentado */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: #007bff; /* Color al enfocar */
+}
+
+/* Button Styles */
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    font-size: 16px; /* Aumentar tamaño de fuente */
+    margin-bottom: 10px; /* Espacio entre los botones */
+}
+
+button[type="submit"] {
+    background-color: #28a745; /* Color verde para el botón de enviar */
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838; /* Color más oscuro al pasar el ratón */
+}
+
+button[type="button"] {
+    background-color: #dc3545; /* Color rojo para el botón de cancelar */
+    color: white;
+}
+
+button[type="button"]:hover {
+    background-color: #c82333; /* Color más oscuro al pasar el ratón */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: auto; /* Permitir que el footer esté siempre al final */
+    width: 100%; /* Asegura que el footer ocupe todo el ancho */
+}
+
+.footer-logo {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 5px;
+}
+
+.footer-text {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .sidebar {
+        position: static; /* Hacer que el sidebar no sea fijo */
+        width: 100%; /* Ancho completo */
+        height: auto; /* Permitir que se ajuste al contenido */
+    }
+
+    .main-content {
+        margin-left: 0; /* Quitar margen izquierdo */
+    }
+
+    .form-container {
+        margin: 20px; /* Espacio en móviles */
+        width: auto; /* Ancho automático */
+    }
+}

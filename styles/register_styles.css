@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Color de fondo suave */
+    margin: 0;
+    padding: 0;
+}
+
+header, footer {
+    background-color: #333; /* Color oscuro para encabezado y pie de página */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.sidebar {
+    background-color: #444; /* Fondo más oscuro para el sidebar */
+    color: white;
+    width: 200px; /* Ancho fijo para el sidebar */
+    height: 100vh; /* Altura completa de la pantalla */
+    float: left; /* Flotar a la izquierda */
+    padding: 15px;
+}
+
+.main-content {
+    margin-left: 220px; /* Margen para que no se superponga con el sidebar */
+    padding: 20px;
+    background-color: white; /* Fondo blanco para el contenido principal */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+}
+
+.form-container {
+    max-width: 500px; /* Máximo ancho del formulario */
+    margin: 0 auto; /* Centrar el formulario */
+    padding: 20px;
+    background-color: #fff; /* Fondo blanco para el contenedor del formulario */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%; /* Ancho completo */
+    padding: 10px;
+    border: 1px solid #ccc; /* Borde suave */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+button {
+    background-color: #5cb85c; /* Color verde para el botón */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c; /* Color más oscuro al pasar el ratón */
+}

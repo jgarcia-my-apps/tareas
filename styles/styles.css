@@ -1,0 +1,143 @@
+@import url('reset.css');
+@import url('header-footer.css');
+@import url('sidebar.css');
+@import url('main-content.css');
+
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background */
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-image: url('../assets/images/hogar.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Styles */
+header {
+    background: url('https://www.transparenttextures.com/patterns/pale-paper.png');
+    color: #333;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Styles */
+footer {
+    background: url('https://www.transparenttextures.com/patterns/pale-paper.png');
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.footer-content {
+    color: #333;
+}
+
+/* Login Card Styles */
+.card {
+    max-width: 400px; /* Limitar el ancho de la tarjeta */
+    margin: 100px auto; /* Centrar vertical y horizontalmente */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Styles */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button Styles */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .card {
+        margin: 20px; /* Espacio en móviles */
+    }
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    margin-top: 20px; /* Espacio entre el botón y el logo */
+}
+
+.logo {
+    width: 80px; /* Ajusta el tamaño del logo según necesites */
+    height: 80px; /* Mantenemos la proporción para que sea circular */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen cubra el área del círculo */
+    border: 2px solid #007bff; /* Borde opcional */
+}
+.footer-content {
+    display: flex;
+    flex-direction: column; /* Colocar el logo y el texto uno debajo del otro */
+    align-items: center; /* Centrar horizontalmente */
+    padding: 20px 0; /* Espaciado superior e inferior */
+}
+
+.footer-logo {
+    width: 60px; /* Ajusta el tamaño del logo */
+    height: 60px; /* Mantén la proporción para que sea circular */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen cubra el área del círculo */
+    margin-bottom: 10px; /* Espacio entre el logo y el texto */
+}
+footer {
+    background-color: #007BFF;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.footer-logo {
+    max-width: 150px; /* Ajusta según sea necesario */
+    height: auto;
+    display: block;
+    margin: 0 auto 10px; /* Centrado */
+}

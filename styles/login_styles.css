@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajusta para centrar el contenido verticalmente */
+    margin: 0;
+    background-color: #f4f4f4; /* Color de fondo */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px; /* Ancho fijo para el formulario */
+}
+
+h1 {
+    text-align: center;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Espaciado entre inputs */
+}
+
+.input-group i {
+    margin-right: 10px; /* Espacio entre el ícono y el input */
+}
+
+input {
+    flex: 1; /* Ocupa el resto del espacio */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Color del botón */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3; /* Color del botón al pasar el mouse */
+}
+
+.logo-container {
+    text-align: center;
+    margin-top: 20px; /* Espacio entre el botón y el logo */
+}
+
+.logo {
+    max-width: 100%; /* Asegúrate de que el logo no exceda el contenedor */
+    height: auto;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px; /* Espacio entre el mensaje de error y el formulario */
+}
+
+header {
+    background-color: #f4f4f4; /* Color de fondo para el header */
+    padding: 20px; /* Espacio alrededor del contenido */
+    display: flex; /* Hacer el header un contenedor flex */
+    justify-content: center; /* Centrar el contenido horizontalmente */
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Alinear logo y título en columna */
+    align-items: center; /* Centrar horizontalmente */
+    text-align: center; /* Alinear el texto al centro */
+}
+
+.logo {
+    max-width: 100px; /* Ajusta según sea necesario */
+    height: auto; /* Mantener proporciones */
+}
+
+h1 {
+    margin-top: 10px; /* Espacio entre el logo y el título */
+    font-size: 24px; /* Tamaño del texto */
+}
