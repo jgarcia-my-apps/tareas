@@ -42,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Iniciar Sesión</title>
 </head>
 <body>
-    <?php include 'header.php'; ?>
 
     <div class="container">
         <div class="card">
@@ -67,6 +66,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <?php include 'footer.php'; ?>
 </body>
 </html>
