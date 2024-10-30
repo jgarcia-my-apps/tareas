@@ -1,0 +1,190 @@
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background */
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #f4f4f4; /* Color de fondo neutro */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header and Footer */
+header, footer {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Styles */
+header {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-end; /* Alinear a la derecha */
+    align-items: center; /* Centrar verticalmente */
+}
+
+.user-info {
+    display: flex;
+    align-items: center; /* Centrar verticalmente los elementos dentro del header */
+}
+
+.user-info span {
+    margin-right: 15px; /* Espacio entre el nombre del usuario y los íconos */
+    font-weight: bold; /* Hacer el nombre del usuario más destacado */
+}
+
+.user-info a {
+    color: #333; /* Color de los íconos */
+    text-decoration: none; /* Sin subrayado */
+    margin-left: 10px; /* Espacio entre los íconos */
+    transition: color 0.3s; /* Transición suave al cambiar el color */
+}
+
+.user-info a:hover {
+    color: #007bff; /* Cambiar color al pasar el ratón */
+}
+
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    width: 240px; /* Ancho para mejorar la legibilidad */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    overflow-y: auto; /* Permitir scroll si es necesario */
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 240px; /* Margen para el sidebar */
+    padding: 20px;
+    flex: 1; /* Esto debería permitir que se expanda */
+    display: flex;
+    flex-direction: column; /* Asegúrate de que el contenido se apile verticalmente */
+}
+
+
+/* Estilos del contenedor del formulario */
+.container {
+    width: 100%; /* Asegúrate de que ocupe el 100% del contenedor padre */
+    max-width: 1250px; /* Aumentar el ancho máximo */
+    margin: 0 auto; /* Centrar horizontalmente */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 40px; /* Aumentar el padding */
+}
+
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Espacio entre el encabezado y la tabla */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Button Styles */
+.btn-add {
+    background-color: #28a745; /* Color verde para el botón de agregar */
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 20px; /* Espacio arriba del botón */
+    transition: background-color 0.3s;
+}
+
+.btn-add:hover {
+    background-color: #218838; /* Color más oscuro al pasar el ratón */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: auto; /* Permitir que el footer esté siempre al final */
+    width: 100%; /* Asegura que el footer ocupe todo el ancho */
+}
+
+.footer-logo {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 5px;
+}
+
+.footer-text {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .sidebar {
+        position: static; /* Hacer que el sidebar no sea fijo */
+        width: 100%; /* Ancho completo */
+        height: auto; /* Permitir que se ajuste al contenido */
+    }
+
+    .main-content {
+        margin-left: 0; /* Quitar margen izquierdo */
+    }
+
+    .container {
+        margin: 20px; /* Espacio en móviles */
+        width: auto; /* Ancho automático */
+    }
+}

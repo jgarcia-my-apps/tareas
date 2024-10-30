@@ -1,22 +1,17 @@
 <?php
-
+session_start();
+include 'db_connection.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
 
-include 'db_connection.php';
-
 // Obtener usuarios solo si el rol es admin
 if ($_SESSION['role'] === 'admin') {
-    // Obtener usuarios
     $sql = "SELECT * FROM users";
     $result = $conn->query($sql);
-    $message = '';
-    if (isset($_GET['message'])) {
-        $message = htmlspecialchars($_GET['message']);
-    }
+    $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : '';
 }
 
 ?>
@@ -26,13 +21,13 @@ if ($_SESSION['role'] === 'admin') {
 <head>
     <meta charset="UTF-8">
     <title>Página de Usuario</title>
-    <link rel="stylesheet" href="styles/user_home.css"> <!-- Asegúrate de tener estilos aquí -->
+    <link rel="stylesheet" href="styles/user_home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    
-    <?php include 'sidebar.php'; ?>
+    <?php include 'sidebar_users.php'; ?>
+    <?php include 'header_admin.php'; ?>
 
     <div class="main-content">
         <div class="container">
@@ -70,7 +65,6 @@ if ($_SESSION['role'] === 'admin') {
             <?php else: ?>
                 <h1>Bienvenido, <?php echo $_SESSION['user']; ?>!</h1>
                 <p>Aquí puedes gestionar tus tareas.</p>
-                <!-- Aquí puedes añadir más contenido específico para los usuarios -->
                 <table>
                     <tr>
                         <th>ID</th>
