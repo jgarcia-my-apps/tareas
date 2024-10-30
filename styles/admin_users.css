@@ -188,3 +188,50 @@ footer {
         width: auto; /* Ancho automático */
     }
 }
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    width: 90%; /* Ancho más responsive */
+    max-width: 600px; /* Máximo ancho */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Espacio entre campos */
+}
+
+label {
+    display: block; /* Etiquetas en bloque */
+    margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+    font-weight: bold; /* Texto en negrita */
+}
+
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 4px; /* Esquinas redondeadas */
+}
+
+textarea {
+    resize: vertical; /* Permitir redimensionar verticalmente */
+}
+
+.btn-submit {
+    background-color: #28a745; /* Color verde */
+    color: white; /* Texto blanco */
+    padding: 10px 15px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Esquinas redondeadas */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+.btn-submit:hover {
+    background-color: #218838; /* Color más oscuro al pasar el mouse */
+}
