@@ -10,7 +10,7 @@
     <div class="container">
         <div class="user-info">
             <span><?php echo $_SESSION['user']; ?></span> <!-- Muestra el nombre del usuario conectado -->
-            <a href="profile.php" class="settings-icon" title="Configuración">
+            <a href="profile_user.php" class="settings-icon" title="Configuración">
                 <i class="fas fa-cog"></i> <i class="fas fa-user"></i> Mi perfil <!-- Ícono de perfil de usuario -->
             </a>
             <a href="logout.php" class="logout-icon" title="Cerrar Sesión">

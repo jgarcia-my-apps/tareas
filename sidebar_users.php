@@ -39,7 +39,7 @@
 <div class="sidebar">
     <h2>Panel de Control</h2>
     <ul>       
-        <li><a href="list_tasks.php">Mis Tareas</a></li>      
+        <li><a href="user_home.php">Mis Tareas</a></li>      
         <li><a href="logout.php">Cerrar Sesión</a></li>
     </ul>
 </div>
