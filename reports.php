@@ -87,6 +87,9 @@ function generateExcel($result)
     </button>
 </a>
  <center><h1>REPORTE DE TAREAS</h1></center>
+ <!-- Botones de descarga -->
+<a href="reports.php?download=pdf">Descargar PDF</a>
+<a href="reports.php?download=excel">Descargar Excel</a>
 <table>
 
     <thead>
@@ -121,9 +124,7 @@ function generateExcel($result)
     </tbody>
 </table>
 
-<!-- Botones de descarga -->
-<a href="reports.php?download=pdf">Descargar PDF</a>
-<a href="reports.php?download=excel">Descargar Excel</a>
+
 <?php include 'footer.php'; ?>
 </body>
 </html>

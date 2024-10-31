@@ -73,9 +73,9 @@
                 <i class="fas fa-cog"></i>
                 <span>Mi perfil</span>
             </a>
-            <a href="logout.php" class="logout-icon" title="Cerrar Sesión">
+            <!-- <a href="logout.php" class="logout-icon" title="Cerrar Sesión">
                 <i class="fas fa-sign-out-alt"></i>
-                <span>Cerrar sesión</span>
+                <span>Cerrar sesión</span> -->
             </a>
         </div>
     </div>
