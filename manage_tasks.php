@@ -11,6 +11,33 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
 
 include 'db_connection.php'; // Incluye la conexión a la base de datos
 
+
+// Filtrar tareas por fecha
+$start_filter = $_GET['start_filter'] ?? ''; // Inicializa la variable
+$end_filter = $_GET['end_filter'] ?? '';     // Inicializa la variable
+$user_filter = $_GET['user_id'] ?? '';       // Inicializa el filtro de usuario
+
+$sql_tasks = "SELECT * FROM tasks WHERE 1=1"; // Consulta inicial
+$filter_params = []; // Arreglo para los parámetros de filtro
+
+// Filtrar por fecha de inicio
+if (!empty($start_filter)) {
+    $sql_tasks .= " AND start_date >= ?";
+    $filter_params[] = $start_filter;
+}
+
+// Filtrar por fecha de vencimiento
+if (!empty($end_filter)) {
+    $sql_tasks .= " AND due_date <= ?";
+    $filter_params[] = $end_filter;
+}
+
+// Filtrar por usuario asignado
+if (!empty($user_filter)) {
+    $sql_tasks .= " AND user_id = ?";
+    $filter_params[] = $user_filter;
+}
+
 // Obtener usuarios
 $sql_users = "SELECT * FROM users";
 $result_users = $conn->query($sql_users);
@@ -45,6 +72,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_task'])) {
         $message = 'Por favor, completa todos los campos.';
     }
 }
+
+$sql_tasks = "SELECT * FROM tasks WHERE 1=1";
+$filter_params = [];
+
+if ($start_filter) {
+    $sql_tasks .= " AND start_date >= ?";
+    $filter_params[] = $start_filter;
+}
+
+if ($end_filter) {
+    $sql_tasks .= " AND due_date <= ?";
+    $filter_params[] = $end_filter;
+}
+
+if (isset($_GET['user_id']) && $_GET['user_id'] != '') {
+    $sql_tasks .= " AND user_id = ?";
+    $filter_params[] = $_GET['user_id'];
+}
+
+$stmt = $conn->prepare($sql_tasks);
+
+// Asegúrate de que el número de tipos de datos en bind_param coincida con los parámetros
+if (count($filter_params) > 0) {
+    $types = str_repeat('s', count($filter_params)); // 's' para string, usa 'i' si el tipo es integer
+    $stmt->bind_param($types, ...$filter_params);
+}
+
+
+
+
+
 
 // Manejar edición de tarea
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_task'])) {
@@ -87,19 +145,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_notification_i
 }
 
 // Filtrar tareas por fecha
-$start_filter = $_GET['start_filter'] ?? '';
-$end_filter = $_GET['end_filter'] ?? '';
+// Filtrar tareas por fecha
+$start_filter = $_GET['start_filter'] ?? ''; // Inicializa la variable
+$end_filter = $_GET['end_filter'] ?? '';     // Inicializa la variable
+$user_filter = $_GET['user_id'] ?? '';       // Inicializa el filtro de usuario
 
-$sql_tasks = "SELECT * FROM tasks";
-if ($start_filter && $end_filter) {
-    $sql_tasks .= " WHERE start_date >= ? AND due_date <= ?";
-    $stmt = $conn->prepare($sql_tasks);
-    $stmt->bind_param("ss", $start_filter, $end_filter);
-} else {
-    $stmt = $conn->prepare($sql_tasks);
+// Consulta inicial
+$sql_tasks = "SELECT * FROM tasks WHERE 1=1"; // Utiliza 1=1 para facilitar la adición de condiciones
+$filter_params = []; // Arreglo para los parámetros de filtro
+
+// Filtrar por fecha de inicio
+if (!empty($start_filter)) {
+    $sql_tasks .= " AND start_date >= ?";
+    $filter_params[] = $start_filter;
 }
+
+// Filtrar por fecha de vencimiento
+if (!empty($end_filter)) {
+    $sql_tasks .= " AND due_date <= ?";
+    $filter_params[] = $end_filter;
+}
+
+// Filtrar por usuario asignado
+if (!empty($user_filter)) {
+    $sql_tasks .= " AND user_id = ?";
+    $filter_params[] = $user_filter;
+}
+
+// Preparar la consulta
+$stmt = $conn->prepare($sql_tasks);
+
+// Asegúrate de que el número de tipos de datos en bind_param coincida con los parámetros
+if (count($filter_params) > 0) {
+    // Aquí asumimos que todos los parámetros son de tipo string ('s')
+    $types = str_repeat('s', count($filter_params)); 
+    $stmt->bind_param($types, ...$filter_params);
+}
+
+// Ejecutar la consulta
 $stmt->execute();
 $result_tasks = $stmt->get_result();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -312,7 +399,9 @@ $result_tasks = $stmt->get_result();
                             <label for="status">Estado:</label>
                             <select name="status" id="edit_status" required>
                                 <option value="">Seleccione un estado</option>
+                                <option value="nueva">Nueva</option>
                                 <option value="Pendiente">Pendiente</option>
+                                <option value="asignada">asignada</option>
                                 <option value="En Progreso">En Progreso</option>
                                 <option value="Completada">Completada</option>
                             </select>
