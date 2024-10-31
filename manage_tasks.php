@@ -171,6 +171,7 @@ $result_tasks = $stmt->get_result();
 
             <h2>Tareas</h2>
             <button id="createTaskBtn" class="btn-submit">Crear Tarea</button>
+            <button id="filterTasksBtn" class="btn-filter" onclick="openFilterModal()">Filtrar Tareas</button>
             <table>
                 <tr>
                     <th>ID</th>
@@ -251,10 +252,12 @@ $result_tasks = $stmt->get_result();
                             <select name="user_id" required>
                                 <option value="">Seleccione un usuario</option>
                                 <?php while ($user = $result_users->fetch_assoc()): ?>
-                                    <option value="<?php echo htmlspecialchars($user['id']); ?>"><?php echo htmlspecialchars($user['name']); ?></option>
+                                    <option value="<?php echo htmlspecialchars($user['id']); ?>"><?php echo htmlspecialchars($user['username']); ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
+
+
                         <button type="submit" name="create_task" class="btn-submit">Crear</button>
                         <button type="button" class="btn-cancel close">Cancelar</button>
                     </form>
@@ -298,13 +301,13 @@ $result_tasks = $stmt->get_result();
                             <select name="user_id" id="edit_user_id" required>
                                 <option value="">Seleccione un usuario</option>
                                 <?php
-                                // Vuelve a obtener los usuarios para mostrarlos en el modal
                                 $result_users->data_seek(0); // Reinicia el puntero del resultado
                                 while ($user = $result_users->fetch_assoc()): ?>
-                                    <option value="<?php echo htmlspecialchars($user['id']); ?>"><?php echo htmlspecialchars($user['name']); ?></option>
+                                    <option value="<?php echo htmlspecialchars($user['id']); ?>"><?php echo htmlspecialchars($user['username']); ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="status">Estado:</label>
                             <select name="status" id="edit_status" required>
@@ -321,6 +324,37 @@ $result_tasks = $stmt->get_result();
             </div>
         </div>
     </div>
+<!-- Modal para Filtrar Tareas -->
+<div id="filterModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeFilterModal()">&times;</span>
+        <h2>Filtrar Tareas</h2>
+        <form method="GET" action="manage_tasks.php">
+            <div class="form-group">
+                <label for="start_filter">Fecha de Inicio:</label>
+                <input type="date" name="start_filter">
+            </div>
+            <div class="form-group">
+                <label for="end_filter">Fecha de Vencimiento:</label>
+                <input type="date" name="end_filter">
+            </div>
+                        <div class="form-group">
+                <label for="user_id">Usuario Asignado:</label>
+                <select name="user_id" id="edit_user_id" required>
+                    <option value="">Seleccione un usuario</option>
+                    <?php
+                    $result_users->data_seek(0); // Reinicia el puntero del resultado
+                    while ($user = $result_users->fetch_assoc()): ?>
+                        <option value="<?php echo htmlspecialchars($user['id']); ?>"><?php echo htmlspecialchars($user['username']); ?></option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-filter">Buscar</button>
+            <button type="button" class="btn-cancel" onclick="closeFilterModal()">Cancelar</button>
+        </form>
+    </div>
+</div>
 
     <script>
         // Obtener elementos del DOM
@@ -377,6 +411,22 @@ $result_tasks = $stmt->get_result();
                 editTaskModal.style.display = "none";
             }
         };
+        function openFilterModal() {
+    document.getElementById("filterModal").style.display = "block";
+}
+
+function closeFilterModal() {
+    document.getElementById("filterModal").style.display = "none";
+}
+
+// Cerrar el modal si el usuario hace clic fuera de él
+window.onclick = function(event) {
+    const modal = document.getElementById("filterModal");
+    if (event.target == modal) {
+        closeFilterModal();
+    }
+}
+
     </script>
 </body>
 </html>
