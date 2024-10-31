@@ -72,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_task'])) {
     }
 }
 
-
 // Manejar eliminación de notificación
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_notification_id'])) {
     $notification_id = $_POST['delete_notification_id'];
@@ -101,7 +100,6 @@ if ($start_filter && $end_filter) {
 }
 $stmt->execute();
 $result_tasks = $stmt->get_result();
-
 ?>
 
 <!DOCTYPE html>
@@ -139,7 +137,7 @@ $result_tasks = $stmt->get_result();
             <h1>ADMINISTRAR TAREAS</h1>
 
             <?php if (!empty($message)): ?>
-                <div class="alert"><?php echo htmlspecialchars($message); ?></div> <!-- Seguridad adicional -->
+                <div class="alert"><?php echo htmlspecialchars($message); ?></div>
             <?php endif; ?>
 
             <h2>Notificaciones</h2>
@@ -159,9 +157,7 @@ $result_tasks = $stmt->get_result();
                         <td>
                             <form method="POST" action="manage_tasks.php" style="display:inline;">
                                 <input type="hidden" name="delete_notification_id" value="<?php echo htmlspecialchars($notification['id']); ?>">
-                                <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta notificación?');" class="btn-cancel">
-                                    Eliminar
-                                </button>
+                                <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta notificación?');"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -174,36 +170,16 @@ $result_tasks = $stmt->get_result();
             </table>
 
             <h2>Tareas</h2>
-            <button id="filterModalBtn" class="btn-add"><i class="fas fa-filter"></i> Filtrar Tareas</button>
-
-            <!-- Modal para filtrar tareas -->
-            <div id="filterModal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <span class="close-filter">&times;</span>
-                    <h2>Filtrar Tareas</h2>
-                    <form method="GET" action="manage_tasks.php">
-                        <div class="form-group">
-                            <label for="start_filter">Fecha de Inicio:</label>
-                            <input type="date" name="start_filter" id="start_filter" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="end_filter">Fecha de Vencimiento:</label>
-                            <input type="date" name="end_filter" id="end_filter" required>
-                        </div>
-                        <button type="submit" class="btn-filter">Filtrar</button>
-                    </form>
-                </div>
-            </div>
-
+            <button id="createTaskBtn" class="btn-submit">Crear Tarea</button>
             <table>
                 <tr>
                     <th>ID</th>
-                    <th>Título</th>
+                    <th>Tarea</th>
                     <th>Descripción</th>
-                    <th>Usuario Asignado</th>
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Vencimiento</th>
                     <th>Prioridad</th>
+                    <th>Usuario Asignado</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -213,6 +189,9 @@ $result_tasks = $stmt->get_result();
                         <td><?php echo htmlspecialchars($task['id']); ?></td>
                         <td><?php echo htmlspecialchars($task['task_name']); ?></td>
                         <td><?php echo htmlspecialchars($task['description']); ?></td>
+                        <td><?php echo htmlspecialchars($task['start_date']); ?></td>
+                        <td><?php echo htmlspecialchars($task['due_date']); ?></td>
+                        <td><?php echo htmlspecialchars($task['priority']); ?></td>
                         <td>
                             <?php
                             $user_sql = "SELECT username FROM users WHERE id = " . (int)$task['user_id'];
@@ -221,126 +200,183 @@ $result_tasks = $stmt->get_result();
                             echo $user ? htmlspecialchars($user['username']) : 'No asignado';
                             ?>
                         </td>
-                        <td><?php echo htmlspecialchars($task['start_date']); ?></td>
-                        <td><?php echo htmlspecialchars($task['due_date']); ?></td>
-                        <td><?php echo htmlspecialchars($task['priority']); ?></td>
+
                         <td><?php echo htmlspecialchars($task['status']); ?></td>
                         <td>
-                            <button class="btn-edit" onclick="openEditModal(<?php echo htmlspecialchars($task['id']); ?>, '<?php echo htmlspecialchars($task['task_name']); ?>', '<?php echo htmlspecialchars($task['description']); ?>', '<?php echo htmlspecialchars($task['start_date']); ?>', '<?php echo htmlspecialchars($task['due_date']); ?>', '<?php echo htmlspecialchars($task['priority']); ?>', <?php echo htmlspecialchars($task['user_id']); ?>);">
-                                Editar
-                            </button>
-                            <form method="POST" action="delete_task.php" style="display:inline;">
-                                <input type="hidden" name="task_id" value="<?php echo htmlspecialchars($task['id']); ?>">
-                                <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');" class="btn-cancel">
-                                    Eliminar
-                                </button>
-                            </form>
+                            <button class="editTaskBtn" data-id="<?php echo htmlspecialchars($task['id']); ?>" data-title="<?php echo htmlspecialchars($task['task_name']); ?>" data-description="<?php echo htmlspecialchars($task['description']); ?>" data-start="<?php echo htmlspecialchars($task['start_date']); ?>" data-due="<?php echo htmlspecialchars($task['due_date']); ?>" data-priority="<?php echo htmlspecialchars($task['priority']); ?>" data-user="<?php echo htmlspecialchars($task['user_id']); ?>" data-status="<?php echo htmlspecialchars($task['status']); ?>"><i class="fas fa-edit"></i></button>
+                            <button class="deleteTaskBtn" data-id="<?php echo htmlspecialchars($task['id']); ?>"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="7">No hay tareas.</td>
+                        <td colspan="9">No hay tareas disponibles.</td>
                     </tr>
                 <?php endif; ?>
             </table>
 
-           <!-- Modal para editar tarea -->
-<div id="editTaskModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close-edit">&times;</span>
-        <h2>Editar Tarea</h2>
-        <form id="editTaskForm" method="POST" action="manage_tasks.php">
-            <input type="hidden" name="task_id" id="edit_task_id" value="">
-            <div class="form-group">
-                <label for="edit_title">Título:</label>
-                <input type="text" name="title" id="edit_title" required>
+            <!-- Modal para crear tarea -->
+            <div id="createTaskModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Crear Tarea</h2>
+                    <form method="POST" action="manage_tasks.php">
+                        <div class="form-group">
+                            <label for="title">Título:</label>
+                            <input type="text" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descripción:</label>
+                            <textarea name="description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="start_date">Fecha de Inicio:</label>
+                            <input type="date" name="start_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="due_date">Fecha de Vencimiento:</label>
+                            <input type="date" name="due_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Prioridad:</label>
+                            <select name="priority" required>
+                                <option value="">Seleccione una prioridad</option>
+                                <option value="Baja">Baja</option>
+                                <option value="Media">Media</option>
+                                <option value="Alta">Alta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_id">Usuario Asignado:</label>
+                            <select name="user_id" required>
+                                <option value="">Seleccione un usuario</option>
+                                <?php while ($user = $result_users->fetch_assoc()): ?>
+                                    <option value="<?php echo htmlspecialchars($user['id']); ?>"><?php echo htmlspecialchars($user['name']); ?></option>
+                                <?php endwhile; ?>
+                            </select>
+                        </div>
+                        <button type="submit" name="create_task" class="btn-submit">Crear</button>
+                        <button type="button" class="btn-cancel close">Cancelar</button>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="edit_description">Descripción:</label>
-                <textarea name="description" id="edit_description" required></textarea>
+
+            <!-- Modal para editar tarea -->
+            <div id="editTaskModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Editar Tarea</h2>
+                    <form method="POST" action="manage_tasks.php">
+                        <input type="hidden" name="task_id" id="edit_task_id">
+                        <div class="form-group">
+                            <label for="title">Título:</label>
+                            <input type="text" name="title" id="edit_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descripción:</label>
+                            <textarea name="description" id="edit_description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="start_date">Fecha de Inicio:</label>
+                            <input type="date" name="start_date" id="edit_start_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="due_date">Fecha de Vencimiento:</label>
+                            <input type="date" name="due_date" id="edit_due_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Prioridad:</label>
+                            <select name="priority" id="edit_priority" required>
+                                <option value="">Seleccione una prioridad</option>
+                                <option value="Baja">Baja</option>
+                                <option value="Media">Media</option>
+                                <option value="Alta">Alta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_id">Usuario Asignado:</label>
+                            <select name="user_id" id="edit_user_id" required>
+                                <option value="">Seleccione un usuario</option>
+                                <?php
+                                // Vuelve a obtener los usuarios para mostrarlos en el modal
+                                $result_users->data_seek(0); // Reinicia el puntero del resultado
+                                while ($user = $result_users->fetch_assoc()): ?>
+                                    <option value="<?php echo htmlspecialchars($user['id']); ?>"><?php echo htmlspecialchars($user['name']); ?></option>
+                                <?php endwhile; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Estado:</label>
+                            <select name="status" id="edit_status" required>
+                                <option value="">Seleccione un estado</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="En Progreso">En Progreso</option>
+                                <option value="Completada">Completada</option>
+                            </select>
+                        </div>
+                        <button type="submit" name="edit_task" class="btn-submit">Guardar Cambios</button>
+                        <button type="button" class="btn-cancel close">Cancelar</button>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="edit_start_date">Fecha de Inicio:</label>
-                <input type="date" name="start_date" id="edit_start_date" required>
-            </div>
-            <div class="form-group">
-                <label for="edit_due_date">Fecha de Vencimiento:</label>
-                <input type="date" name="due_date" id="edit_due_date" required>
-            </div>
-            <div class="form-group">
-                <label for="edit_priority">Prioridad:</label>
-                <select name="priority" id="edit_priority" required>
-                    <option value="baja">Baja</option>
-                    <option value="media">Media</option>
-                    <option value="alta">Alta</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="edit_user_id">Asignar a Usuario:</label>
-                <select name="user_id" id="edit_user_id" required>
-                    <?php while ($user = $result_users->fetch_assoc()): ?>
-                        <option value="<?php echo htmlspecialchars($user['id']); ?>"><?php echo htmlspecialchars($user['username']); ?></option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-            <div class="form-group">
-        <label>Estado:</label>
-            <select name="status" id="edit_status" required>
-                <option value="nueva" selected>Nueva</option>
-                <option value="pendiente">Pendiente</option>
-                <option value="asignada">Asignada</option>
-                <option value="completada">Completada</option>
-            </select>
         </div>
-
-            <button type="submit" name="edit_task" class="btn-submit">Actualizar</button>
-            <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancelar</button>
-        </form>
     </div>
-</div>
-
-
 
     <script>
-        function closeEditModal() {
-    document.getElementById('editTaskModal').style.display = 'none';
-}
+        // Obtener elementos del DOM
+        const createTaskModal = document.getElementById('createTaskModal');
+        const editTaskModal = document.getElementById('editTaskModal');
+        const createTaskBtn = document.getElementById('createTaskBtn');
+        const closeButtons = document.querySelectorAll('.close');
+        const editTaskButtons = document.querySelectorAll('.editTaskBtn');
 
-        function openEditModal(id, title, description, startDate, dueDate, priority, status, userId) {
-            document.getElementById('edit_task_id').value = id;
-            document.getElementById('edit_title').value = title;
-            document.getElementById('edit_description').value = description;
-            document.getElementById('edit_start_date').value = startDate;
-            document.getElementById('edit_due_date').value = dueDate;
-            document.getElementById('edit_priority').value = priority;
-            document.getElementById('edit_status').value = status;
-            document.getElementById('edit_user_id').value = userId;
+        // Abrir modal para crear tarea
+        createTaskBtn.onclick = function() {
+            createTaskModal.style.display = "block";
+        };
 
-            document.getElementById('editTaskModal').style.display = 'block';
-        }
+        // Abrir modal para editar tarea
+        editTaskButtons.forEach(button => {
+            button.onclick = function() {
+                const taskId = this.getAttribute('data-id');
+                const title = this.getAttribute('data-title');
+                const description = this.getAttribute('data-description');
+                const start = this.getAttribute('data-start');
+                const due = this.getAttribute('data-due');
+                const priority = this.getAttribute('data-priority');
+                const userId = this.getAttribute('data-user');
+                const status = this.getAttribute('data-status'); // Trae el estado
 
-        document.querySelector('.close-edit').onclick = function() {
-            document.getElementById('editTaskModal').style.display = 'none';
-        }
+                document.getElementById('edit_task_id').value = taskId;
+                document.getElementById('edit_title').value = title;
+                document.getElementById('edit_description').value = description;
+                document.getElementById('edit_start_date').value = start;
+                document.getElementById('edit_due_date').value = due;
+                document.getElementById('edit_priority').value = priority;
+                document.getElementById('edit_user_id').value = userId;
+                document.getElementById('edit_status').value = status; // Asigna el estado
 
-        document.querySelector('.close-filter').onclick = function() {
-            document.getElementById('filterModal').style.display = 'none';
-        }
+                editTaskModal.style.display = "block";
+            };
+        });
 
-        document.getElementById('filterModalBtn').onclick = function() {
-            document.getElementById('filterModal').style.display = 'block';
-        }
+        // Cerrar modales
+        closeButtons.forEach(button => {
+            button.onclick = function() {
+                createTaskModal.style.display = "none";
+                editTaskModal.style.display = "none";
+            };
+        });
 
+        // Cerrar modales al hacer clic fuera de ellos
         window.onclick = function(event) {
-            if (event.target === document.getElementById('editTaskModal') || event.target === document.getElementById('filterModal')) {
-                document.getElementById('editTaskModal').style.display = 'none';
-                document.getElementById('filterModal').style.display = 'none';
+            if (event.target === createTaskModal) {
+                createTaskModal.style.display = "none";
             }
-        }
+            if (event.target === editTaskModal) {
+                editTaskModal.style.display = "none";
+            }
+        };
     </script>
-
-<?php include 'footer.php'; ?>
 </body>
-
 </html>
