@@ -55,11 +55,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_task'])) {
     $due_date = $_POST['due_date'];
     $priority = $_POST['priority'];
     $user_id = $_POST['user_id'];
+    $status = $_POST['status']; // Asegúrate de que estás recogiendo el estado
 
     // Consulta para actualizar la tarea
-    $sql_update = "UPDATE tasks SET task_name = ?, description = ?, start_date = ?, due_date = ?, priority = ?, user_id = ? WHERE id = ?";
+    $sql_update = "UPDATE tasks SET task_name = ?, description = ?, start_date = ?, due_date = ?, priority = ?, user_id = ?, status = ? WHERE id = ?";
     $stmt = $conn->prepare($sql_update);
-    $stmt->bind_param("ssssssi", $title, $description, $start_date, $due_date, $priority, $user_id, $task_id);
+
+    // Cambia 'ssssssi' por 'sssssssi' para incluir el estado
+    $stmt->bind_param("sssssssi", $title, $description, $start_date, $due_date, $priority, $user_id, $status, $task_id);
 
     // Ejecutar la consulta
     if ($stmt->execute()) {
@@ -68,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_task'])) {
         $message = 'Error al actualizar la tarea: ' . $stmt->error;
     }
 }
+
 
 // Manejar eliminación de notificación
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_notification_id'])) {
@@ -200,6 +204,7 @@ $result_tasks = $stmt->get_result();
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Vencimiento</th>
                     <th>Prioridad</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
                 <?php if ($result_tasks->num_rows > 0): ?>
@@ -219,6 +224,7 @@ $result_tasks = $stmt->get_result();
                         <td><?php echo htmlspecialchars($task['start_date']); ?></td>
                         <td><?php echo htmlspecialchars($task['due_date']); ?></td>
                         <td><?php echo htmlspecialchars($task['priority']); ?></td>
+                        <td><?php echo htmlspecialchars($task['status']); ?></td>
                         <td>
                             <button class="btn-edit" onclick="openEditModal(<?php echo htmlspecialchars($task['id']); ?>, '<?php echo htmlspecialchars($task['task_name']); ?>', '<?php echo htmlspecialchars($task['description']); ?>', '<?php echo htmlspecialchars($task['start_date']); ?>', '<?php echo htmlspecialchars($task['due_date']); ?>', '<?php echo htmlspecialchars($task['priority']); ?>', <?php echo htmlspecialchars($task['user_id']); ?>);">
                                 Editar
@@ -278,6 +284,16 @@ $result_tasks = $stmt->get_result();
                     <?php endwhile; ?>
                 </select>
             </div>
+            <div class="form-group">
+        <label>Estado:</label>
+            <select name="status" id="edit_status" required>
+                <option value="nueva" selected>Nueva</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="asignada">Asignada</option>
+                <option value="completada">Completada</option>
+            </select>
+        </div>
+
             <button type="submit" name="edit_task" class="btn-submit">Actualizar</button>
             <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancelar</button>
         </form>
@@ -285,18 +301,20 @@ $result_tasks = $stmt->get_result();
 </div>
 
 
+
     <script>
         function closeEditModal() {
     document.getElementById('editTaskModal').style.display = 'none';
 }
 
-        function openEditModal(id, title, description, startDate, dueDate, priority, userId) {
+        function openEditModal(id, title, description, startDate, dueDate, priority, status, userId) {
             document.getElementById('edit_task_id').value = id;
             document.getElementById('edit_title').value = title;
             document.getElementById('edit_description').value = description;
             document.getElementById('edit_start_date').value = startDate;
             document.getElementById('edit_due_date').value = dueDate;
             document.getElementById('edit_priority').value = priority;
+            document.getElementById('edit_status').value = status;
             document.getElementById('edit_user_id').value = userId;
 
             document.getElementById('editTaskModal').style.display = 'block';
@@ -322,5 +340,7 @@ $result_tasks = $stmt->get_result();
         }
     </script>
 
+<?php include 'footer.php'; ?>
 </body>
+
 </html>
