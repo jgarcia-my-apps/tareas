@@ -153,14 +153,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <div class="main-content">
             <h1>Editar Perfil</h1>
-            <form action="profile.php" method="POST" class="profile-form">
+            <form action="profile_user.php" method="POST" class="profile-form">
                 <div class="input-group">
                     <label for="username">Nombre de Usuario:</label>
-                    <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($userData['username']); ?>" required>
+                    <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($userData['username']); ?>" readonly>
                 </div>
                 <div class="input-group">
                     <label for="email">Correo Electrónico:</label>
-                    <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($userData['email']); ?>" required>
+                    <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($userData['email']); ?>" readonly>
                 </div>
                 <div class="input-group">
                     <label for="password">Nueva Contraseña:</label>

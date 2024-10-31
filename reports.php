@@ -1,8 +1,12 @@
 <?php
 require_once 'db_connection.php'; // Conexión a la base de datos
 
-// Consulta para obtener las tareas
-$query = "SELECT id, user_id, start_date, task_name, status, created_at, updated_at, description, due_date, priority FROM tasks";
+// Consulta para obtener las tareas con el nombre del usuario
+$query = "
+    SELECT t.id, u.username, t.start_date, t.task_name, t.status, t.created_at, t.updated_at, t.description, t.due_date, t.priority 
+    FROM tasks t 
+    JOIN users u ON t.user_id = u.id
+";
 $result = $conn->query($query);
 
 // Verificar la conexión y si hay tareas
@@ -40,7 +44,7 @@ function generatePDF($result)
     // Datos
     while ($row = $result->fetch_assoc()) {
         $pdf->Cell(20, 10, $row['id'], 1);
-        $pdf->Cell(30, 10, $row['user_id'], 1);
+        $pdf->Cell(30, 10, $row['username'], 1); // Cambiar a 'username'
         $pdf->Cell(30, 10, $row['start_date'], 1);
         $pdf->Cell(50, 10, $row['task_name'], 1);
         $pdf->Cell(30, 10, $row['status'], 1);
@@ -59,7 +63,7 @@ function generateExcel($result)
 
     echo "ID\tUsuario\tFecha Inicio\tNombre Tarea\tEstado\tPrioridad\n";
     while ($row = $result->fetch_assoc()) {
-        echo "{$row['id']}\t{$row['user_id']}\t{$row['start_date']}\t{$row['task_name']}\t{$row['status']}\t{$row['priority']}\n";
+        echo "{$row['id']}\t{$row['username']}\t{$row['start_date']}\t{$row['task_name']}\t{$row['status']}\t{$row['priority']}\n"; // Cambiar a 'username'
     }
     exit;
 }
@@ -75,14 +79,16 @@ function generateExcel($result)
 <body>
 <?php include 'header.php'; ?>
    
-<h2>Reporte de Tareas</h2>
+
 <!-- Botón para ir a la gestión de tareas -->
 <a href="http://localhost/tareas/manage_tasks.php" style="text-decoration: none;">
     <button style="padding: 10px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
         Ir a Gestión de Tareas
     </button>
 </a>
+ <center><h1>REPORTE DE TAREAS</h1></center>
 <table>
+
     <thead>
         <tr>
             <th>ID</th>
@@ -101,7 +107,7 @@ function generateExcel($result)
         <?php while ($row = $result->fetch_assoc()): ?>
         <tr>
             <td><?php echo $row['id']; ?></td>
-            <td><?php echo $row['user_id']; ?></td>
+            <td><?php echo $row['username']; ?></td> <!-- Cambiar a 'username' -->
             <td><?php echo $row['start_date']; ?></td>
             <td><?php echo $row['task_name']; ?></td>
             <td><?php echo $row['status']; ?></td>

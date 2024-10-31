@@ -132,17 +132,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_task'])) {
 
 // Manejar eliminación de notificación
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_notification_id'])) {
-    $notification_id = $_POST['delete_notification_id'];
+    $delete_id = $_POST['delete_notification_id'];
     $sql_delete = "DELETE FROM notifications WHERE id = ?";
-    $stmt = $conn->prepare($sql_delete);
-    $stmt->bind_param("i", $notification_id);
-
-    if ($stmt->execute()) {
-        $message = 'Notificación eliminada exitosamente.';
-    } else {
-        $message = 'Error al eliminar la notificación: ' . $stmt->error;
+    $stmt_delete = $conn->prepare($sql_delete);
+    $stmt_delete->bind_param("i", $delete_id);
+    $stmt_delete->execute();
+    header("Location: manage_tasks.php"); // Cambia 'notifications.php' por la ruta correcta
+    exit(); // Asegúrate de salir después de redirigir
     }
-}
+
 
 // Filtrar tareas por fecha
 // Filtrar tareas por fecha
@@ -193,7 +191,8 @@ $result_tasks = $stmt->get_result();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Administrar Tareas</title>
+    <center><title>Administrar Tareas</title></center>
+    
     <link rel="stylesheet" href="styles/admin_users.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -221,7 +220,7 @@ $result_tasks = $stmt->get_result();
     
     <div class="main-content">
         <div class="container">
-            <h1>ADMINISTRAR TAREAS</h1>
+           <center><h1>ADMINISTRAR TAREAS</h1></center>
 
             <?php if (!empty($message)): ?>
                 <div class="alert"><?php echo htmlspecialchars($message); ?></div>
@@ -256,7 +255,7 @@ $result_tasks = $stmt->get_result();
                 <?php endif; ?>
             </table>
 
-            <h2>Tareas</h2>
+          <center><h2>Tareas</h2></center>  
             <button id="createTaskBtn" class="btn-submit">Crear Tarea</button>
             <button id="filterTasksBtn" class="btn-filter" onclick="openFilterModal()">Filtrar Tareas</button>
             <table>
