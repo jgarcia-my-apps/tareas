@@ -235,3 +235,71 @@ textarea {
 .btn-submit:hover {
     background-color: #218838; /* Color más oscuro al pasar el mouse */
 }
+.status-selector {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.status-option {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.status-option:hover {
+    background-color: #f0f0f0; /* Color al pasar el mouse */
+}
+
+.status-option i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+.form-group {
+    position: relative;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    appearance: none; /* Para quitar el estilo predeterminado del select */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.5 5.5a.5.5 0 0 1 .75-.433l.08.073L8 10.793l5.67-5.653a.5.5 0 0 1 .639-.058l.073.058a.5.5 0 0 1 .058.639l-.058.073L8 12.793 1.5 5.5z"/></svg>'), 
+                      linear-gradient(to right, transparent 25%, #e8e8e8 25%, #e8e8e8 75%, transparent 75%, transparent),
+                      linear-gradient(to bottom, #f9f9f9, #f9f9f9);
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: right 10px center, right 10px center, 0 0;
+    background-size: 12px, 100%, 100%;
+}
+
+select option {
+    background-color: white;
+}
+
+select option[value="nueva"] {
+    background-image: url('path_to_icon/nueva_icon.svg'); /* Reemplaza con la ruta de tu icono */
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 20px; /* Ajusta el espacio para el icono */
+}
+
+select option[value="Pendiente"] {
+    background-image: url('path_to_icon/pendiente_icon.svg'); /* Reemplaza con la ruta de tu icono */
+}
+
+select option[value="asignada"] {
+    background-image: url('path_to_icon/asignada_icon.svg'); /* Reemplaza con la ruta de tu icono */
+}
+
+select option[value="En Progreso"] {
+    background-image: url('path_to_icon/en_progreso_icon.svg'); /* Reemplaza con la ruta de tu icono */
+}
+
+select option[value="Completada"] {
+    background-image: url('path_to_icon/completada_icon.svg'); /* Reemplaza con la ruta de tu icono */
+}

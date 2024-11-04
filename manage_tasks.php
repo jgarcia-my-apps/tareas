@@ -58,11 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_task'])) {
     $priority = $_POST['priority'] ?? '';
     $user_id = $_POST['user_id'] ?? '';
 
+    // Verificar que todos los campos requeridos están completos
     if (!empty($title) && !empty($description) && !empty($start_date) && !empty($due_date) && !empty($priority) && !empty($user_id)) {
-        $sql_create = "INSERT INTO tasks (task_name, description, start_date, due_date, priority, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql_create = "INSERT INTO tasks (task_name, description, start_date, due_date, priority, user_id, is_new) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql_create);
-        $stmt->bind_param("sssssi", $title, $description, $start_date, $due_date, $priority, $user_id);
+        $is_new = 1; // Establecer is_new como 1 para una nueva tarea
         
+        // Bindear los parámetros
+        $stmt->bind_param("sssssii", $title, $description, $start_date, $due_date, $priority, $user_id, $is_new);
+        
+        // Ejecutar la consulta
         if ($stmt->execute()) {
             $message = 'Tarea creada exitosamente.';
         } else {
@@ -72,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_task'])) {
         $message = 'Por favor, completa todos los campos.';
     }
 }
+
 
 $sql_tasks = "SELECT * FROM tasks WHERE 1=1";
 $filter_params = [];
@@ -325,16 +331,17 @@ $result_tasks = $stmt->get_result();
                             <input type="date" name="due_date" required>
                         </div>
                         <div class="form-group">
-                            <label for="priority">Prioridad:</label>
-                            <select name="priority" required>
-                                <option value="">Seleccione una prioridad</option>
-                                <option value="Baja">Baja</option>
-                                <option value="Media">Media</option>
-                                <option value="Alta">Alta</option>
-                            </select>
-                        </div>
+                        <label for="priority">Prioridad:</label>
+                        <select name="priority" id="edit_priority" required>
+                            <option value="">Seleccione una prioridad</option>
+                            <option value="Baja">Baja</option>
+                            <option value="Media">Media</option>
+                            <option value="Alta">Alta</option>
+                        </select>
+                    </div>
+
                         <div class="form-group">
-                            <label for="user_id">Usignar tarea a:</label>
+                            <label for="user_id">Asignar tarea a:</label>
                             <select name="user_id" required>
                                 <option value="">Seleccione un usuario</option>
                                 <?php while ($user = $result_users->fetch_assoc()): ?>
@@ -398,9 +405,10 @@ $result_tasks = $stmt->get_result();
                             <label for="status">Estado:</label>
                             <select name="status" id="edit_status" required>
                                 <option value="">Seleccione un estado</option>
-                                <option value="nueva">Nueva</option>
+                                div class="status-option" data-value="nueva">
+                                    <i class="fas fa-bell"></i> Nueva
                                 <option value="Pendiente">Pendiente</option>
-                                <option value="asignada">asignada</option>
+                                <option value="asignada">Asignada</option>
                                 <option value="En Progreso">En Progreso</option>
                                 <option value="Completada">Completada</option>
                             </select>
@@ -528,6 +536,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+
+
+    //iconos de estados
+    document.querySelectorAll('.status-option').forEach(option => {
+    option.addEventListener('click', function() {
+        const statusValue = this.getAttribute('data-value');
+        document.getElementById('selected_status').value = statusValue;
+
+        // Opcional: Actualiza visualmente la opción seleccionada
+        document.querySelectorAll('.status-option').forEach(opt => {
+            opt.classList.remove('selected');
+        });
+        this.classList.add('selected');
+    });
+});
+
     </script>
     <?php include 'footer.php'; ?>
 </body>
