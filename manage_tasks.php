@@ -266,7 +266,7 @@ $result_tasks = $stmt->get_result();
                     <th>Fecha de Inicio</th>
                     <th>Fecha de Vencimiento</th>
                     <th>Prioridad</th>
-                    <th>Usuario Asignado</th>
+                    <th>tarea asignada a:</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -334,7 +334,7 @@ $result_tasks = $stmt->get_result();
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="user_id">Usuario Asignado:</label>
+                            <label for="user_id">Usignar tarea a:</label>
                             <select name="user_id" required>
                                 <option value="">Seleccione un usuario</option>
                                 <?php while ($user = $result_users->fetch_assoc()): ?>
@@ -383,7 +383,7 @@ $result_tasks = $stmt->get_result();
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="user_id">Usuario Asignado:</label>
+                            <label for="user_id">tarea asignada a:</label>
                             <select name="user_id" id="edit_user_id" required>
                                 <option value="">Seleccione un usuario</option>
                                 <?php
@@ -515,6 +515,19 @@ window.onclick = function(event) {
     }
 }
 
+//ELIMINAR TAREA
+document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.deleteTaskBtn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const taskId = this.getAttribute('data-id');
+                const confirmation = confirm('¿Estás seguro de que deseas eliminar esta tarea?');
+                if (confirmation) {
+                    window.location.href = `delete_task.php?id=${taskId}`;
+                }
+            });
+        });
+    });
     </script>
     <?php include 'footer.php'; ?>
 </body>

@@ -58,7 +58,7 @@ $current_time = date('Y-m-d H:i:s'); // Formato de fecha y hora
     <header>
         <div class="container">
             <img src="assets/images/logo.png" alt="Logo" class="logo">
-            <h1>Bienvenido al sistema de gestión de tareas Task Family v 1.0</h1>
+            <h1>Bienvenido al sistema de gestión de tareas Task Family </h1>
         </div>
        
         <div class="current-time">

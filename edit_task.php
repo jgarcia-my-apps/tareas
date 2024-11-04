@@ -12,14 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $status = $_POST['status'];
+    $comments = $_POST['comments']; // Nuevo campo para comentarios
 
     // Usar el ID del administrador
     $admin_id = 10; // Cambia esto por el ID correcto del administrador
 
     // Actualizar la tarea en la base de datos
-    $sql = "UPDATE tasks SET task_name = ?, description = ?, status = ? WHERE id = ?";
+    $sql = "UPDATE tasks SET task_name = ?, description = ?, status = ?, comments = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssi", $title, $description, $status, $task_id);
+    $stmt->bind_param("ssssi", $title, $description, $status, $comments, $task_id);
 
     if ($stmt->execute()) {
         // Verificar si el estado es "Completada"

@@ -7,6 +7,23 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+// Obtener la última fecha de visita del usuario
+$sql_last_visit = "SELECT last_visit FROM users WHERE id = ?";
+$stmt_last_visit = $conn->prepare($sql_last_visit);
+$stmt_last_visit->bind_param("i", $user_id);
+$stmt_last_visit->execute();
+$last_visit = $stmt_last_visit->get_result()->fetch_assoc()['last_visit'];
+
+// Obtener tareas solo para el usuario logueado
+$sql_tasks = "SELECT *, creation_date > ? AS is_new FROM tasks WHERE user_id = ?";
+$stmt = $conn->prepare($sql_tasks);
+$stmt->bind_param("si", $last_visit, $user_id);
+$stmt->execute();
+$result_tasks = $stmt->get_result();
+
+
+
+
 $user_id = $_SESSION['user_id']; // Asegúrate de tener el ID del usuario en la sesión
 $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : '';
 
@@ -171,45 +188,49 @@ $result_tasks = $stmt->get_result();
                     <td><?php echo htmlspecialchars($task['description']); ?></td>
                     <td><?php echo htmlspecialchars($task['status']); ?></td>
                     <td>
-                        <button class="edit-btn" 
-                                data-id="<?php echo $task['id']; ?>" 
-                                data-title="<?php echo htmlspecialchars($task['task_name']); ?>" 
-                                data-description="<?php echo htmlspecialchars($task['description']); ?>" 
-                                data-status="<?php echo htmlspecialchars($task['status']); ?>">
-                            Editar
-                        </button>
+                    <button class="edit-btn" data-id="1" data-title="Mi Tarea" data-description="Descripción aquí" data-status="Pendiente" data-comments="Comentario anterior">
+    Editar
+                    </button>
+
                     </td>
                 </tr>
                 <?php endwhile; ?>
             </table>
 
             <!-- Modal para editar tarea -->
-            <div id="editTaskModal" style="display:none;" class="modal_editar">
-                <div class="modal-content">
-                    <span class="close" onclick="closeModal()">&times;</span>
-                    <h2>Editar Tarea</h2>
-                    <form id="editTaskForm" method="POST" action="edit_task.php">
-                        <input type="hidden" id="edit_task_id" name="id">
-                        <div class="form-group">
-                            <label for="edit_title">Título:</label>
-                            <input type="text" id="edit_title" name="title" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_description">Descripción:</label>
-                            <textarea id="edit_description" name="description" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_status">Estado:</label>
-                            <select id="edit_status" name="status">
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="En progreso">En progreso</option>
-                                <option value="Completada">Completada</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-submit">Guardar Cambios</button>
-                    </form>
-                </div>
+            <!-- Modal para editar tarea -->
+<div id="editTaskModal" style="display:none;" class="modal_editar">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Editar Tarea</h2>
+        <form id="editTaskForm" method="POST" action="edit_task.php">
+            <input type="hidden" id="edit_task_id" name="id">
+            <div class="form-group">
+                <label for="edit_title">Título:</label>
+                <input type="text" id="edit_title" name="title" readonly>
             </div>
+            <div class="form-group">
+                <label for="edit_description">Descripción:</label>
+                <textarea id="edit_description" name="description" readonly></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit_comments">Comentarios:</label>
+                <textarea id="edit_comments" name="comments"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit_status">Estado:</label>
+                <select id="edit_status" name="status">
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En progreso">En progreso</option>
+                    <option value="Completada">Completada</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
         </div>
     </div>
     <?php include 'footer.php'; ?>
@@ -257,7 +278,7 @@ $result_tasks = $stmt->get_result();
             document.getElementById('edit_title').value = title;
             document.getElementById('edit_description').value = description;
             document.getElementById('edit_status').value = status;
-
+            // document.getElementById('edit_comments').value = comments;
             document.getElementById('editTaskModal').style.display = "block";
         });
     });
