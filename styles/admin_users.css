@@ -303,3 +303,8 @@ select option[value="En Progreso"] {
 select option[value="Completada"] {
     background-image: url('path_to_icon/completada_icon.svg'); /* Reemplaza con la ruta de tu icono */
 }
+
+.notification-icon {
+    color: red;
+    font-weight: bold;
+}

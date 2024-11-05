@@ -21,6 +21,11 @@ $current_time = date('Y-m-d H:i:s'); // Formato de fecha y hora
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
+    
     <style>
         header {
             background-color: #f4f4f4; /* Color de fondo para el header */
@@ -58,13 +63,21 @@ $current_time = date('Y-m-d H:i:s'); // Formato de fecha y hora
     <header>
         <div class="container">
             <img src="assets/images/logo.png" alt="Logo" class="logo">
-            <h1>Bienvenido al sistema de gestión de tareas Task Family </h1>
-        </div>
-       
-        <div class="current-time">
+            <h1>Generador de reportes de tareas </h1>
+            <div class="current-time">
             <h3 id="clock"><?php echo $current_time; ?></h3> <!-- Muestra la hora y fecha actual -->
         </div>
-        <li><a href="logout.php">Cerrar Sesión</a></li>
+        </div>
+       
+       
+        <ul>
+    <!-- Otros elementos del menú -->
+    <li><a href="logout.php"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
+
+
+</a></li>
+
+
     </header>
 
     <script>

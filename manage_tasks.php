@@ -237,6 +237,7 @@ $result_tasks = $stmt->get_result();
                 <tr>
                     <th>ID</th>
                     <th>Mensaje</th>
+                    
                     <th>Fecha</th>
                     <th>Acciones</th>
                 </tr>
@@ -245,6 +246,7 @@ $result_tasks = $stmt->get_result();
                     <tr>
                         <td><?php echo htmlspecialchars($notification['id']); ?></td>
                         <td><?php echo htmlspecialchars($notification['message']); ?></td>
+                     
                         <td><?php echo htmlspecialchars($notification['created_at']); ?></td>
                         <td>
                             <form method="POST" action="manage_tasks.php" style="display:inline;">

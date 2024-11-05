@@ -3,9 +3,10 @@ require_once 'db_connection.php'; // Conexión a la base de datos
 
 // Consulta para obtener las tareas con el nombre del usuario
 $query = "
-    SELECT t.id, u.username, t.start_date, t.task_name, t.status, t.created_at, t.updated_at, t.description, t.due_date, t.priority 
+    SELECT t.id, u.username, t.start_date, t.creation_date, t.task_name, t.status, t.created_at, t.updated_at, t.description, t.due_date, t.priority 
     FROM tasks t 
     JOIN users u ON t.user_id = u.id
+
 ";
 $result = $conn->query($query);
 
@@ -28,32 +29,49 @@ if (isset($_GET['download'])) {
 function generatePDF($result)
 {
     require('fpdf186/fpdf.php');
-    $pdf = new FPDF();
+    $pdf = new FPDF('L', 'mm', 'A3'); // Orientación horizontal y tamaño A4
     $pdf->AddPage();
-    $pdf->SetFont('Arial', 'B', 12);
+    
+    // Configuración del título
+    $pdf->SetFont('Arial', 'B', 16); // Fuente más grande para el título
+    $pdf->Cell(0, 10, utf8_decode('Reporte de Tareas'), 0, 1, 'C'); // Título centrado
+    $pdf->Ln(5); // Espacio debajo del título
+    
+    // Configuración de los encabezados
+    $pdf->SetFont('Arial', 'B', 10); // Fuente más pequeña para los encabezados
+    $pdf->Cell(10, 10, utf8_decode('ID'), 1, 0, 'C');
+    $pdf->Cell(40, 10, utf8_decode('Nombre Tarea'), 1, 0, 'C');
+    $pdf->Cell(30, 10, utf8_decode('Usuario'), 1, 0, 'C');
+    $pdf->Cell(30, 10, utf8_decode('Fecha Inicio'), 1, 0, 'C');
+    $pdf->Cell(30, 10, utf8_decode('Fecha Fin'), 1, 0, 'C');
+    $pdf->Cell(30, 10, utf8_decode('Estado'), 1, 0, 'C');
+    $pdf->Cell(20, 10, utf8_decode('Prioridad'), 1, 0, 'C');
+    $pdf->Cell(40, 10, utf8_decode('Fecha de Creación'), 1, 0, 'C');
+    $pdf->Cell(40, 10, utf8_decode('Última Actualización'), 1, 0, 'C');
+    $pdf->Cell(50, 10, utf8_decode('Descripción'), 1, 1, 'C'); // 1 al final para saltar de línea después de esta celda
 
-    // Encabezados
-    $pdf->Cell(20, 10, 'ID', 1);
-    $pdf->Cell(30, 10, 'Usuario', 1);
-    $pdf->Cell(30, 10, 'Fecha Inicio', 1);
-    $pdf->Cell(50, 10, 'Nombre Tarea', 1);
-    $pdf->Cell(30, 10, 'Estado', 1);
-    $pdf->Cell(30, 10, 'Prioridad', 1);
-    $pdf->Ln();
-
-    // Datos
+    // Datos de cada tarea
+    $pdf->SetFont('Arial', '', 8);
     while ($row = $result->fetch_assoc()) {
-        $pdf->Cell(20, 10, $row['id'], 1);
-        $pdf->Cell(30, 10, $row['username'], 1); // Cambiar a 'username'
+        $pdf->Cell(10, 10, $row['id'], 1);
+        $pdf->Cell(40, 10, utf8_decode($row['task_name']), 1);
+        $pdf->Cell(30, 10, utf8_decode($row['username']), 1);
         $pdf->Cell(30, 10, $row['start_date'], 1);
-        $pdf->Cell(50, 10, $row['task_name'], 1);
-        $pdf->Cell(30, 10, $row['status'], 1);
-        $pdf->Cell(30, 10, $row['priority'], 1);
+        $pdf->Cell(30, 10, $row['creation_date'], 1);
+        $pdf->Cell(30, 10, utf8_decode($row['status']), 1);
+        $pdf->Cell(20, 10, utf8_decode($row['priority']), 1);
+        $pdf->Cell(40, 10, $row['created_at'], 1);
+        $pdf->Cell(40, 10, $row['updated_at'], 1);
+        
+        // Descripción en varias líneas
+        $pdf->MultiCell(50, 10, utf8_decode($row['description']), 1);
+
         $pdf->Ln();
     }
     $pdf->Output('D', 'reporte_tareas.pdf');
     exit;
 }
+
 
 // Función para generar el archivo Excel
 function generateExcel($result)
